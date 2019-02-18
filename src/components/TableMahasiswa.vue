@@ -1,5 +1,6 @@
 <template>
-  <div class="table-mahasiswa">
+  <div class="table-mahasiswa table-design">
+    <h4>Contoh Data Mahasiswa</h4>
     <table>
       <thead>
         <tr>
@@ -28,19 +29,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-table {
-  width: auto;
-}
 
-table tr th {
-  text-align: center;
-}
-
-table tr td {
-  text-align: right;
-
-  &:first-child {
-    text-align: center;
-  }
-}
 </style>

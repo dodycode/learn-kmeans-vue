@@ -1,17 +1,20 @@
 <template>
   <div class="home">
     <TableMahasiswa :mahasiswa-data="mahasiswaData" />
+    <TableBmiKerangka :bmi-kerangka-data="bmiKerangkaData" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import TableMahasiswa from '@/components/TableMahasiswa.vue'
+import TableBmiKerangka from '@/components/TableBmiKerangka.vue'
 
 export default {
   name: 'home',
   components: {
-    TableMahasiswa
+    TableMahasiswa,
+    TableBmiKerangka
   },
   data () {
     return {
@@ -38,12 +41,42 @@ export default {
         { tinggiBadan: 169, beratBadan: 79, lingkarLenganBawah: 17 }
       ]
     }
+  },
+  computed: {
+    bmiKerangkaData () {
+      return this.mahasiswaData.map(mahasiswa => {
+        const heightInMeter = mahasiswa.tinggiBadan / 100
+        const bmi = (mahasiswa.beratBadan / Math.pow(heightInMeter, 2)).toFixed(2)
+        const ukuranKerangka = (mahasiswa.tinggiBadan / mahasiswa.lingkarLenganBawah).toFixed(2)
+        return { bmi, ukuranKerangka }
+      })
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .home {
   padding: 32px;
+}
+
+.table-design {
+  display: inline-block;
+
+  table {
+    width: auto;
+  }
+
+  table tr th {
+    text-align: center;
+  }
+
+  table tr td {
+    text-align: right;
+
+    &:first-child {
+      text-align: center;
+    }
+  }
 }
 </style>
