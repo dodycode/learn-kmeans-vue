@@ -1,19 +1,21 @@
 <template>
   <div class="home">
-
+    <TableMahasiswa :mahasiswa-data="mahasiswaData" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import TableMahasiswa from '@/components/TableMahasiswa.vue'
 
 export default {
   name: 'home',
   components: {
+    TableMahasiswa
   },
   data () {
     return {
-      mahasiswa: [
+      mahasiswaData: [
         { tinggiBadan: 163, beratBadan: 59, lingkarLenganBawah: 14 },
         { tinggiBadan: 170, beratBadan: 125, lingkarLenganBawah: 19 },
         { tinggiBadan: 164, beratBadan: 53, lingkarLenganBawah: 15 },
@@ -33,9 +35,15 @@ export default {
         { tinggiBadan: 160, beratBadan: 54, lingkarLenganBawah: 15 },
         { tinggiBadan: 173, beratBadan: 56, lingkarLenganBawah: 14 },
         { tinggiBadan: 162, beratBadan: 54, lingkarLenganBawah: 15 },
-        { tinggiBadan: 169, beratBadan: 79, lingkarLenganBawah: 17 },
+        { tinggiBadan: 169, beratBadan: 79, lingkarLenganBawah: 17 }
       ]
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.home {
+  padding: 32px;
+}
+</style>
