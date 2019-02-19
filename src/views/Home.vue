@@ -2,7 +2,9 @@
   <div class="home">
     <TableMahasiswa :mahasiswa-data="mahasiswaData" />
     <TableBmiKerangka :bmi-kerangka-data="bmiKerangkaData" />
-    <TableCluster v-for="(cluster, index) in clusterData" :key="index" :cluster="cluster" />
+    <div class="table-cluster-container">
+      <TableCluster v-for="(cluster, index) in clusterData" :key="index" :cluster="cluster" :index="index" />
+    </div>
   </div>
 </template>
 
@@ -111,5 +113,9 @@ export default {
       text-align: center;
     }
   }
+}
+
+.table-cluster-container {
+  margin-top: 64px;
 }
 </style>
