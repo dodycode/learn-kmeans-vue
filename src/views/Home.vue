@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import isEqual from 'lodash/isEqual'
+
 // @ is an alias to /src
 import TableMahasiswa from '@/components/TableMahasiswa.vue'
 import TableBmiKerangka from '@/components/TableBmiKerangka.vue'
@@ -97,9 +99,7 @@ export default {
       this.clusterData.push(cluster)
     },
 
-    getNextPusatCluster (index) {
-      const cluster = this.clusterData[index]
-
+    getNextPusatCluster (cluster) {
       const newPusatCluster = []
       for (let i = 0; i < this.pusatClusterData[0].length; i++) {
         let totalBmi = { value: 0, length: 0 }
@@ -119,13 +119,40 @@ export default {
       }
 
       this.pusatClusterData.push(newPusatCluster)
+    },
+
+    checkEqualsClusterData (cluster1, cluster2) {
+      const cluster1Selected = []
+      const cluster2Selected = []
+
+      cluster1.forEach(item => {
+        item.cluster.forEach((clusterItem, index) => {
+          if (clusterItem.hasOwnProperty('selected')) {
+            cluster1Selected.push(index)
+          }
+        })
+      })
+
+      cluster2.forEach(item => {
+        item.cluster.forEach((clusterItem, index) => {
+          if (clusterItem.hasOwnProperty('selected')) {
+            cluster2Selected.push(index)
+          }
+        })
+      })
+
+      return isEqual(cluster1Selected, cluster2Selected)
     }
   },
 
   mounted () {
     this.doCluster(this.pusatClusterData[0])
-    this.getNextPusatCluster(0)
+    this.getNextPusatCluster(this.clusterData[0])
     this.doCluster(this.pusatClusterData[1])
+
+    if (this.checkEqualsClusterData(this.clusterData[0], this.clusterData[1])) {
+
+    }
   }
 }
 </script>
