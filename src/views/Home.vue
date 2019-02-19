@@ -10,6 +10,7 @@
         :index="index"
         :pusat-cluster="pusatClusterData[index]" />
     </div>
+    <Conclusion :pusat-cluster="pusatClusterData[pusatClusterData.length - 1]" />
   </div>
 </template>
 
@@ -20,13 +21,15 @@ import isEqual from 'lodash/isEqual'
 import TableMahasiswa from '@/components/TableMahasiswa.vue'
 import TableBmiKerangka from '@/components/TableBmiKerangka.vue'
 import TableCluster from '@/components/TableCluster.vue'
+import Conclusion from '@/components/Conclusion.vue'
 
 export default {
   name: 'home',
   components: {
     TableMahasiswa,
     TableBmiKerangka,
-    TableCluster
+    TableCluster,
+    Conclusion
   },
   data () {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div class="table-mahasiswa table-design">
-    <h4>Contoh Data Mahasiswa</h4>
+    <h4>Contoh Data Mahasiswa (Asumsi Data Putra)</h4>
     <table>
       <thead>
         <tr>
