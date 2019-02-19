@@ -39,6 +39,6 @@ export default {
 
 <style lang="scss" scoped>
 .table-cluster {
-  display: block;
+  margin-right: 78px;
 }
 </style>

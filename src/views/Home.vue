@@ -62,6 +62,7 @@ export default {
       clusterData: []
     }
   },
+
   computed: {
     bmiKerangkaData () {
       return this.mahasiswaData.map(mahasiswa => {
@@ -147,11 +148,20 @@ export default {
 
   mounted () {
     this.doCluster(this.pusatClusterData[0])
-    this.getNextPusatCluster(this.clusterData[0])
-    this.doCluster(this.pusatClusterData[1])
 
-    if (this.checkEqualsClusterData(this.clusterData[0], this.clusterData[1])) {
+    let endIteration = false
+    let clusterIndex = 0
+    while (!endIteration) {
+      this.getNextPusatCluster(this.clusterData[clusterIndex])
+      this.doCluster(this.pusatClusterData[clusterIndex + 1])
 
+      const isClusterEqual = this.checkEqualsClusterData(this.clusterData[clusterIndex], this.clusterData[clusterIndex + 1])
+
+      if (isClusterEqual) {
+        endIteration = true
+      } else {
+        clusterIndex++
+      }
     }
   }
 }
