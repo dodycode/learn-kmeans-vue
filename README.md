@@ -1,4 +1,4 @@
-# learn-kmeans-vue
+# Learn K-Means Using Vue
 This project takes references from this journal: https://journal.uii.ac.id/Snati/article/view/753
 
 ## Project setup
