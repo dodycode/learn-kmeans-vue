@@ -2,6 +2,7 @@
   <div class="home">
     <TableMahasiswa :mahasiswa-data="mahasiswaData" />
     <TableBmiKerangka :bmi-kerangka-data="bmiKerangkaData" />
+    <TableCluster v-for="(cluster, index) in clusterData" :key="index" :cluster="cluster" />
   </div>
 </template>
 
@@ -9,12 +10,14 @@
 // @ is an alias to /src
 import TableMahasiswa from '@/components/TableMahasiswa.vue'
 import TableBmiKerangka from '@/components/TableBmiKerangka.vue'
+import TableCluster from '@/components/TableCluster.vue'
 
 export default {
   name: 'home',
   components: {
     TableMahasiswa,
-    TableBmiKerangka
+    TableBmiKerangka,
+    TableCluster
   },
   data () {
     return {
@@ -39,7 +42,15 @@ export default {
         { tinggiBadan: 173, beratBadan: 56, lingkarLenganBawah: 14 },
         { tinggiBadan: 162, beratBadan: 54, lingkarLenganBawah: 15 },
         { tinggiBadan: 169, beratBadan: 79, lingkarLenganBawah: 17 }
-      ]
+      ],
+      pusatClusterData: [
+        [
+          { bmi: 20, ukuranKerangka: 9 },
+          { bmi: 23, ukuranKerangka: 10 },
+          { bmi: 27, ukuranKerangka: 11 }
+        ]
+      ],
+      clusterData: []
     }
   },
   computed: {
@@ -51,6 +62,28 @@ export default {
         return { bmi, ukuranKerangka }
       })
     }
+  },
+
+  methods: {
+    doCluster (pusatCluster) {
+      const cluster = this.bmiKerangkaData.map(bmiKerangka => {
+        bmiKerangka.cluster = []
+        pusatCluster.forEach(data => {
+          const count = Math.pow(bmiKerangka.bmi - data.bmi, 2) + Math.pow(bmiKerangka.ukuranKerangka - data.ukuranKerangka, 2)
+          const square = Math.sqrt(count)
+          bmiKerangka.cluster.push(square.toFixed(2))
+        })
+
+        return bmiKerangka
+      })
+      this.clusterData.push(cluster)
+    }
+  },
+
+  mounted () {
+    this.pusatClusterData.forEach(pusatCluster => {
+      this.doCluster(pusatCluster)
+    })
   }
 }
 </script>
