@@ -73,7 +73,9 @@ export default {
 
   methods: {
     doCluster (pusatCluster) {
-      const cluster = this.bmiKerangkaData.map(bmiKerangka => {
+      const cluster = this.bmiKerangkaData.map(item => {
+        const bmiKerangka = { ...item } // Assign new object so it will not reference
+
         bmiKerangka.cluster = []
 
         let selectedCluster = {}
@@ -123,6 +125,7 @@ export default {
   mounted () {
     this.doCluster(this.pusatClusterData[0])
     this.getNextPusatCluster(0)
+    this.doCluster(this.pusatClusterData[1])
   }
 }
 </script>
