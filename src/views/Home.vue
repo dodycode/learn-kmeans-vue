@@ -51,7 +51,7 @@ export default {
         { tinggiBadan: 169, beratBadan: 79, lingkarLenganBawah: 17 }
       ],
       pusatClusterData: [
-        [
+        [ // First random data
           { bmi: 20, ukuranKerangka: 9 },
           { bmi: 23, ukuranKerangka: 10 },
           { bmi: 27, ukuranKerangka: 11 }
@@ -64,8 +64,8 @@ export default {
     bmiKerangkaData () {
       return this.mahasiswaData.map(mahasiswa => {
         const heightInMeter = mahasiswa.tinggiBadan / 100
-        const bmi = (mahasiswa.beratBadan / Math.pow(heightInMeter, 2)).toFixed(2)
-        const ukuranKerangka = (mahasiswa.tinggiBadan / mahasiswa.lingkarLenganBawah).toFixed(2)
+        const bmi = parseFloat((mahasiswa.beratBadan / Math.pow(heightInMeter, 2)).toFixed(2))
+        const ukuranKerangka = parseFloat((mahasiswa.tinggiBadan / mahasiswa.lingkarLenganBawah).toFixed(2))
         return { bmi, ukuranKerangka }
       })
     }
@@ -80,7 +80,7 @@ export default {
         pusatCluster.forEach((data, index) => {
           const count = Math.pow(bmiKerangka.bmi - data.bmi, 2) + Math.pow(bmiKerangka.ukuranKerangka - data.ukuranKerangka, 2)
           const square = Math.sqrt(count)
-          const value = square.toFixed(2)
+          const value = parseFloat(square.toFixed(2))
           bmiKerangka.cluster.push({ value })
 
           if (selectedCluster.value == null || value < selectedCluster.value) {
@@ -93,11 +93,36 @@ export default {
         return bmiKerangka
       })
       this.clusterData.push(cluster)
+    },
+
+    getNextPusatCluster (index) {
+      const cluster = this.clusterData[index]
+
+      const newPusatCluster = []
+      for (let i = 0; i < this.pusatClusterData[0].length; i++) {
+        let totalBmi = { value: 0, length: 0 }
+        let totalUkuranKerangka = { value: 0, length: 0 }
+        cluster.forEach(item => {
+          if (item.cluster[i].selected) {
+            totalBmi.value += item.bmi
+            totalBmi.length++
+            totalUkuranKerangka.value += item.ukuranKerangka
+            totalUkuranKerangka.length++
+          }
+        })
+
+        const averageBmi = parseFloat((totalBmi.value / totalBmi.length).toFixed(2))
+        const averageUkuranKerangka = parseFloat((totalUkuranKerangka.value / totalUkuranKerangka.length).toFixed(2))
+        newPusatCluster.push({ bmi: averageBmi, ukuranKerangka: averageUkuranKerangka })
+      }
+
+      this.pusatClusterData.push(newPusatCluster)
     }
   },
 
   mounted () {
     this.doCluster(this.pusatClusterData[0])
+    this.getNextPusatCluster(0)
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <h4>Iterasi {{index + 1}}</h4>
     <ul>
       <li v-for="(item, index) in pusatCluster" :key="index">
-        Cluster {{index + 1}}: BMI: {{item.bmi}}, Ukurang Kerangka: {{item.ukuranKerangka}}
+        Cluster {{index + 1}}: BMI: {{item.bmi}}, Ukuran Kerangka: {{item.ukuranKerangka}}
       </li>
     </ul>
     <table>
@@ -38,5 +38,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.table-cluster {
+  display: block;
+}
 </style>
