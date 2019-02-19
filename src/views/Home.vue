@@ -3,7 +3,12 @@
     <TableMahasiswa :mahasiswa-data="mahasiswaData" />
     <TableBmiKerangka :bmi-kerangka-data="bmiKerangkaData" />
     <div class="table-cluster-container">
-      <TableCluster v-for="(cluster, index) in clusterData" :key="index" :cluster="cluster" :index="index" />
+      <TableCluster
+        v-for="(cluster, index) in clusterData"
+        :key="index"
+        :cluster="cluster"
+        :index="index"
+        :pusat-cluster="pusatClusterData[index]" />
     </div>
   </div>
 </template>
@@ -114,13 +119,7 @@ export default {
   }
 
   table tr td {
-    padding-left: 8px;
-    padding-right: 8px;
-    text-align: right;
-
-    &:first-child {
-      text-align: center;
-    }
+    text-align: center;
 
     &.selected {
       background: #42b983;

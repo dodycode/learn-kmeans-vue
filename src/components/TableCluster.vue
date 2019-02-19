@@ -1,6 +1,11 @@
 <template>
   <div class="table-cluster table-design">
     <h4>Iterasi {{index + 1}}</h4>
+    <ul>
+      <li v-for="(item, index) in pusatCluster" :key="index">
+        Cluster {{index + 1}}: BMI: {{item.bmi}}, Ukurang Kerangka: {{item.ukuranKerangka}}
+      </li>
+    </ul>
     <table>
       <thead>
         <tr>
@@ -28,7 +33,7 @@
 
 <script>
 export default {
-  props: ['cluster', 'index']
+  props: ['cluster', 'index', 'pusatCluster']
 }
 </script>
 
