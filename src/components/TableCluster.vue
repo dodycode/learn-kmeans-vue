@@ -17,8 +17,8 @@
           <td>{{index + 1}}</td>
           <td>{{data.bmi}}</td>
           <td>{{data.ukuranKerangka}}</td>
-          <td v-for="(item, index) in data.cluster" :key="index">
-            {{ item }}
+          <td v-for="(item, index) in data.cluster" :key="index" :class="{ selected: item.selected }">
+            {{ item.value }}
           </td>
         </tr>
       </tbody>

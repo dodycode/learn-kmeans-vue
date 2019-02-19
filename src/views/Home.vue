@@ -70,11 +70,20 @@ export default {
     doCluster (pusatCluster) {
       const cluster = this.bmiKerangkaData.map(bmiKerangka => {
         bmiKerangka.cluster = []
-        pusatCluster.forEach(data => {
+
+        let selectedCluster = {}
+        pusatCluster.forEach((data, index) => {
           const count = Math.pow(bmiKerangka.bmi - data.bmi, 2) + Math.pow(bmiKerangka.ukuranKerangka - data.ukuranKerangka, 2)
           const square = Math.sqrt(count)
-          bmiKerangka.cluster.push(square.toFixed(2))
+          const value = square.toFixed(2)
+          bmiKerangka.cluster.push({ value })
+
+          if (selectedCluster.value == null || value < selectedCluster.value) {
+            selectedCluster.value = value // For comparing value
+            selectedCluster.index = index // For setup the position of selected cluster
+          }
         })
+        bmiKerangka.cluster[selectedCluster.index].selected = true
 
         return bmiKerangka
       })
@@ -83,9 +92,7 @@ export default {
   },
 
   mounted () {
-    this.pusatClusterData.forEach(pusatCluster => {
-      this.doCluster(pusatCluster)
-    })
+    this.doCluster(this.pusatClusterData[0])
   }
 }
 </script>
@@ -107,10 +114,17 @@ export default {
   }
 
   table tr td {
+    padding-left: 8px;
+    padding-right: 8px;
     text-align: right;
 
     &:first-child {
       text-align: center;
+    }
+
+    &.selected {
+      background: #42b983;
+      color: #FFFFFF;
     }
   }
 }
